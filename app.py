@@ -51,79 +51,438 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* Global Styles */
-    .main-header {
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    /* Clean Modern Healthcare SaaS Theme Tokens */
+    :root {
+        --primary: #0F766E;
+        --primary-hover: #0D635C;
+        --primary-active: #0B4F4A;
+        --primary-dark: #123B63;
+        --bg-main: #F8FAFC;
+        --bg-sidebar: #F1F5F9;
+        --bg-info: #EFF6FF;
+        --text-main: #1E293B;
+        --text-secondary: #64748B;
+        --border-color: #D9E2EC;
+        --card-bg: #FFFFFF;
+    }
+
+    /* Overall Layout & Typography */
+    html, body, [class*="css"], .stApp {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        color: #1E293B;
+        background-color: #F8FAFC !important;
+    }
+
+    .block-container {
+        max-width: 1040px !important;
+        padding-top: 2rem !important;
+        padding-bottom: 4rem !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+    }
+
+    /* Sidebar Styling */
+    [data-testid="stSidebar"] {
+        background-color: #F1F5F9 !important;
+        border-right: 1px solid #D9E2EC !important;
+    }
+    [data-testid="stSidebar"] > div:first-child {
+        background-color: #F1F5F9 !important;
+        padding: 1.5rem 1.25rem 2rem 1.25rem !important;
+    }
+    .sidebar-brand {
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.85rem;
+        border-bottom: 1px solid #E2E8F0;
+    }
+    .sidebar-title {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #123B63;
+        margin: 0;
+        letter-spacing: -0.015em;
+        line-height: 1.3;
+    }
+    .sidebar-subtitle {
+        font-size: 0.82rem;
+        color: #64748B;
+        margin: 0.25rem 0 0 0;
+        line-height: 1.35;
+    }
+
+    /* System Status Component */
+    .status-card {
+        background-color: #FFFFFF;
+        border: 1px solid #D9E2EC;
+        border-radius: 10px;
+        padding: 0.85rem 1rem;
+        margin-bottom: 0.85rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+    }
+    .status-card-header {
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #123B63;
+        margin-bottom: 0.5rem;
+    }
+    .status-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.4rem 0;
+        font-size: 0.86rem;
+        color: #1E293B;
+    }
+    .status-row:not(:last-child) {
+        border-bottom: 1px solid #F1F5F9;
+    }
+    .status-label {
+        font-weight: 500;
+        color: #1E293B;
+    }
+    .status-pill-green {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        background-color: #DCFCE7;
+        color: #166534;
+        padding: 3px 10px;
+        border-radius: 9999px;
+        font-size: 0.76rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+    }
+    .status-dot-green {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #16A34A;
+        display: inline-block;
+    }
+    .status-pill-gray {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        background-color: #F1F5F9;
+        color: #64748B;
+        padding: 3px 10px;
+        border-radius: 9999px;
+        font-size: 0.76rem;
+        font-weight: 600;
+    }
+    .status-dot-gray {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #94A3B8;
+        display: inline-block;
+    }
+
+    /* Privacy Information Card */
+    .privacy-card {
+        background-color: #FFFFFF;
+        border: 1px solid #D9E2EC;
+        border-radius: 10px;
+        padding: 0.85rem 1rem;
+        margin-bottom: 1.25rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+    }
+    .privacy-card-title {
+        font-size: 0.84rem;
+        font-weight: 700;
+        color: #123B63;
+        margin-bottom: 0.3rem;
+    }
+    .privacy-card-text {
+        font-size: 0.8rem;
+        color: #64748B;
+        line-height: 1.4;
+        margin: 0;
+    }
+
+    /* Main Header */
+    .main-header-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.75rem;
+        padding-bottom: 1.25rem;
+        border-bottom: 1px solid #E2E8F0;
+    }
+    .main-title {
         font-size: 2.2rem;
         font-weight: 700;
-        color: #1e3a8a;
-        margin-bottom: 0.25rem;
+        color: #123B63;
+        letter-spacing: -0.025em;
+        margin: 0 0 0.35rem 0;
+        line-height: 1.2;
     }
-    .sub-header {
-        font-size: 1.05rem;
-        color: #475569;
-        margin-bottom: 1.25rem;
+    .main-subtitle {
+        font-size: 1.02rem;
+        color: #64748B;
+        margin: 0;
+        line-height: 1.5;
     }
-    .disclaimer-box {
-        background-color: #f0fdf4;
-        border-left: 4px solid #16a34a;
-        padding: 0.85rem 1.1rem;
-        border-radius: 6px;
-        margin-bottom: 1.5rem;
-        font-size: 0.92rem;
-        color: #166534;
+    .header-accent {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        background-color: #EFF6FF;
+        color: #0F766E;
+        border: 1px solid #BFDBFE;
+        padding: 0.4rem 0.85rem;
+        border-radius: 9999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        white-space: nowrap;
+        margin-top: 0.25rem;
     }
-    .disclaimer-warning {
-        background-color: #eff6ff;
-        border-left: 4px solid #2563eb;
-        padding: 0.85rem 1.1rem;
-        border-radius: 6px;
-        margin-bottom: 1.5rem;
-        font-size: 0.92rem;
-        color: #1e40af;
+    .header-accent-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: #0F766E;
+        display: inline-block;
     }
-    .timeline-card {
-        background-color: #ffffff;
-        border: 1px solid #e2e8f0;
+
+    /* Safety / Information Card */
+    .safety-card {
+        background-color: #EFF6FF;
+        border: 1px solid #BFDBFE;
+        border-left: 4px solid #2563EB;
         border-radius: 10px;
-        padding: 1.25rem;
+        padding: 1.15rem 1.4rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 1px 3px rgba(37, 99, 235, 0.04);
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+    }
+    .safety-icon {
+        font-size: 1.3rem;
+        line-height: 1.3;
+        color: #2563EB;
+        flex-shrink: 0;
+    }
+    .safety-title {
+        font-size: 0.98rem;
+        font-weight: 700;
+        color: #123B63;
+        margin-bottom: 0.35rem;
+    }
+    .safety-message {
+        font-size: 0.92rem;
+        color: #334155;
+        line-height: 1.55;
+        margin: 0;
+    }
+    .safety-highlight {
+        font-weight: 700;
+        color: #1E3A8A;
+        background-color: #DBEAFE;
+        padding: 1px 6px;
+        border-radius: 4px;
+    }
+
+    /* Onboarding Card container styling */
+    div[data-testid="stForm"] {
+        background-color: #FFFFFF !important;
+        border: 1px solid #D9E2EC !important;
+        border-radius: 14px !important;
+        padding: 2.25rem 2rem 2rem 2rem !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.03) !important;
+        margin-bottom: 2rem !important;
+    }
+    .onboarding-card-header {
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.85rem;
+        border-bottom: 1px solid #F1F5F9;
+    }
+    .onboarding-title {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #123B63;
+        margin: 0 0 0.35rem 0;
+        letter-spacing: -0.015em;
+    }
+    .onboarding-subtext {
+        font-size: 0.95rem;
+        color: #64748B;
+        margin: 0;
+        line-height: 1.45;
+    }
+
+    /* Section Headers & Layout */
+    .section-divider {
+        border: none;
+        border-top: 1px solid #E2E8F0;
+        margin: 2.5rem 0 2rem 0;
+    }
+    .section-header {
         margin-bottom: 1.25rem;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .section-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #123B63;
+        margin: 0 0 0.3rem 0;
+        letter-spacing: -0.01em;
+    }
+    .section-subtitle {
+        font-size: 0.92rem;
+        color: #64748B;
+        margin: 0;
+        line-height: 1.45;
+    }
+
+    /* Timeline Cards */
+    .timeline-card {
+        background-color: #FFFFFF;
+        border: 1px solid #D9E2EC;
+        border-radius: 12px;
+        padding: 1.4rem;
+        margin-bottom: 1.25rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
     }
     .timeline-badge {
         display: inline-block;
-        background-color: #e0e7ff;
-        color: #3730a3;
+        background-color: #EFF6FF;
+        color: #123B63;
+        border: 1px solid #BFDBFE;
         font-weight: 600;
         font-size: 0.82rem;
-        padding: 0.25rem 0.65rem;
+        padding: 0.28rem 0.75rem;
         border-radius: 9999px;
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.85rem;
     }
+
+    /* Summary Card */
     .summary-card {
-        background-color: #f8fafc;
-        border: 1px solid #cbd5e1;
-        border-radius: 10px;
-        padding: 1.5rem;
+        background-color: #FFFFFF;
+        border: 1px solid #D9E2EC;
+        border-radius: 12px;
+        padding: 1.65rem;
         margin-top: 1rem;
         margin-bottom: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
     }
-    .status-pill-green {
-        display: inline-block;
-        background-color: #dcfce7;
-        color: #15803d;
-        padding: 2px 8px;
-        border-radius: 12px;
-        font-size: 0.78rem;
-        font-weight: 600;
+
+    /* Primary Teal Button: #0F766E */
+    button[kind="primary"],
+    div[data-testid="stFormSubmitButton"] > button,
+    .stButton > button[kind="primary"] {
+        background-color: #0F766E !important;
+        color: #FFFFFF !important;
+        border: 1px solid #0F766E !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        font-size: 0.98rem !important;
+        padding: 0.68rem 1.6rem !important;
+        box-shadow: 0 1px 2px rgba(15, 118, 110, 0.2) !important;
+        transition: background-color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+        cursor: pointer !important;
     }
-    .status-pill-gray {
-        display: inline-block;
-        background-color: #f1f5f9;
-        color: #64748b;
-        padding: 2px 8px;
-        border-radius: 12px;
-        font-size: 0.78rem;
-        font-weight: 600;
+    button[kind="primary"]:hover,
+    div[data-testid="stFormSubmitButton"] > button:hover,
+    .stButton > button[kind="primary"]:hover {
+        background-color: #0D635C !important;
+        border-color: #0D635C !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 4px 6px -1px rgba(15, 118, 110, 0.25) !important;
+    }
+    button[kind="primary"]:active,
+    div[data-testid="stFormSubmitButton"] > button:active,
+    .stButton > button[kind="primary"]:active {
+        background-color: #0B4F4A !important;
+        border-color: #0B4F4A !important;
+    }
+
+    /* Secondary Button */
+    button[kind="secondary"],
+    .stButton > button[kind="secondary"],
+    div[data-testid="stDownloadButton"] > button,
+    a[kind="secondary"] {
+        background-color: #FFFFFF !important;
+        color: #123B63 !important;
+        border: 1px solid #D9E2EC !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        font-size: 0.92rem !important;
+        padding: 0.55rem 1.25rem !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+        transition: all 0.15s ease !important;
+    }
+    button[kind="secondary"]:hover,
+    .stButton > button[kind="secondary"]:hover,
+    div[data-testid="stDownloadButton"] > button:hover,
+    a[kind="secondary"]:hover {
+        background-color: #EFF6FF !important;
+        border-color: #0F766E !important;
+        color: #0F766E !important;
+    }
+
+    /* Inputs & Form Controls */
+    div[data-testid="stTextInput"] input,
+    div[data-testid="stTextArea"] textarea {
+        background-color: #FFFFFF !important;
+        border: 1px solid #D9E2EC !important;
+        border-radius: 8px !important;
+        color: #1E293B !important;
+        font-size: 0.95rem !important;
+        padding: 0.65rem 0.85rem !important;
+    }
+    div[data-testid="stTextInput"] input:focus,
+    div[data-testid="stTextArea"] textarea:focus {
+        border-color: #0F766E !important;
+        box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.15) !important;
+    }
+    label, [data-testid="stWidgetLabel"] label, [data-testid="stWidgetLabel"] p {
+        color: #123B63 !important;
+        font-weight: 600 !important;
+        font-size: 0.92rem !important;
+        margin-bottom: 0.35rem !important;
+    }
+
+    /* Chat Messages */
+    [data-testid="stChatMessage"] {
+        background-color: #FFFFFF !important;
+        border: 1px solid #D9E2EC !important;
+        border-radius: 12px !important;
+        padding: 1rem 1.25rem !important;
+        margin-bottom: 0.85rem !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+    }
+
+    /* Chat Input */
+    [data-testid="stChatInput"] {
+        border-color: #D9E2EC !important;
+        border-radius: 10px !important;
+        background-color: #FFFFFF !important;
+    }
+    [data-testid="stChatInput"]:focus-within {
+        border-color: #0F766E !important;
+        box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.15) !important;
+    }
+
+    /* Expander */
+    [data-testid="stExpander"] {
+        background-color: #FFFFFF !important;
+        border: 1px solid #D9E2EC !important;
+        border-radius: 10px !important;
+    }
+
+    /* Metric Cards */
+    [data-testid="stMetric"] {
+        background-color: #FFFFFF !important;
+        border: 1px solid #D9E2EC !important;
+        border-radius: 10px !important;
+        padding: 0.75rem 1rem !important;
+        margin-bottom: 0.5rem !important;
     }
     </style>
     """,
@@ -364,9 +723,15 @@ if "user_gemini_api_key" not in st.session_state:
 # Sidebar: User Info, Configuration & Actions
 # -----------------------------------------------------------------------------
 with st.sidebar:
-    st.title("🩺 Health Tracker")
-    st.caption("Observation Documentation Assistant")
-    st.markdown("---")
+    st.markdown(
+        """
+        <div class="sidebar-brand">
+            <h1 class="sidebar-title">🩺 Health Tracker</h1>
+            <p class="sidebar-subtitle">Observation Documentation Assistant</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     # API Key Configuration if not in secrets.toml
     eff_key = get_effective_gemini_api_key()
@@ -406,17 +771,46 @@ with st.sidebar:
 
         st.markdown("---")
 
-    # Service Status Badges
-    st.subheader("⚙️ System Status")
-    if eff_key:
-        st.markdown('Gemini AI: <span class="status-pill-green">Connected</span>', unsafe_allow_html=True)
-    else:
-        st.markdown('Gemini AI: <span class="status-pill-gray">API Key Needed</span>', unsafe_allow_html=True)
+    # System Status Section
+    st.markdown('<div class="status-card-header">System Status</div>', unsafe_allow_html=True)
 
-    if TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN:
-        st.markdown('Twilio WhatsApp: <span class="status-pill-green">Configured</span>', unsafe_allow_html=True)
-    else:
-        st.markdown('Twilio WhatsApp: <span class="status-pill-gray">Local Test Mode</span>', unsafe_allow_html=True)
+    gemini_pill = (
+        '<span class="status-pill-green"><span class="status-dot-green"></span>Connected</span>'
+        if eff_key else
+        '<span class="status-pill-gray"><span class="status-dot-gray"></span>API Key Needed</span>'
+    )
+    twilio_pill = (
+        '<span class="status-pill-green"><span class="status-dot-green"></span>Configured</span>'
+        if (TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN) else
+        '<span class="status-pill-gray"><span class="status-dot-gray"></span>Local Test Mode</span>'
+    )
+
+    st.markdown(
+        f"""
+        <div class="status-card">
+            <div class="status-row">
+                <span class="status-label">Gemini AI</span>
+                {gemini_pill}
+            </div>
+            <div class="status-row">
+                <span class="status-label">Twilio WhatsApp</span>
+                {twilio_pill}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    # Privacy Information Card
+    st.markdown(
+        """
+        <div class="privacy-card">
+            <div class="privacy-card-title">🔒 Your Privacy</div>
+            <p class="privacy-card-text">Your information is used only for this session.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     # Session Statistics
     if st.session_state.onboarded:
@@ -440,43 +834,64 @@ with st.sidebar:
 # Onboarding View
 # -----------------------------------------------------------------------------
 if not st.session_state.onboarded:
-    st.markdown('<div class="main-header">🩺 Health Observation Tracker</div>', unsafe_allow_html=True)
-    st.markdown(
-        '<div class="sub-header">Record, organize, and monitor visible health observations over time with multimodal AI.</div>',
-        unsafe_allow_html=True,
-    )
-
     st.markdown(
         """
-        <div class="disclaimer-warning">
-            <strong>ℹ️ Documentation & Communication Assistant</strong><br>
-            This application is designed solely to help patients and caregivers objectively document visible health observations 
-            and communicate clearly with healthcare providers. It <strong>does not diagnose</strong> medical conditions, 
-            prescribe medications, or replace professional medical care.
+        <div class="main-header-wrapper">
+            <div>
+                <h1 class="main-title">🩺 Health Observation Tracker</h1>
+                <p class="main-subtitle">Record, organize, and review visible health observations over time with multimodal AI.</p>
+            </div>
+            <div class="header-accent">
+                <span class="header-accent-dot"></span> Clinical Documentation Aid
+            </div>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-    st.subheader("👋 Welcome! Let's get started.")
-    st.write("Please provide your name and WhatsApp number to begin your session.")
+    st.markdown(
+        """
+        <div class="safety-card">
+            <div class="safety-icon">ℹ️</div>
+            <div>
+                <div class="safety-title">Documentation & Communication Assistant</div>
+                <p class="safety-message">
+                    This application is designed solely to help patients and caregivers objectively document visible health observations 
+                    and communicate clearly with healthcare providers. It <span class="safety-highlight">does not diagnose</span> medical 
+                    conditions, prescribe medications, or replace professional medical care.
+                </p>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     with st.form("onboarding_form", clear_on_submit=False):
+        st.markdown(
+            """
+            <div class="onboarding-card-header">
+                <h2 class="onboarding-title">👋 Welcome! Let's get started.</h2>
+                <p class="onboarding-subtext">Please provide your name and WhatsApp number to begin your session.</p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
         col1, col2 = st.columns(2)
         with col1:
             name_input = st.text_input(
-                "Patient / Caregiver Name *",
+                "👤 Patient / Caregiver Name *",
                 placeholder="e.g., Jane Doe",
                 help="The name used to personalize your observation records.",
             )
         with col2:
             phone_input = st.text_input(
-                "WhatsApp Number *",
+                "📱 WhatsApp Number *",
                 placeholder="e.g., +1 555 123 4567",
                 help="Include country code (e.g. +1 for US, +44 for UK, +91 for India).",
             )
 
-        submit_onboarding = st.form_submit_button("Start Tracking Observations", type="primary")
+        st.markdown('<div style="height: 0.5rem;"></div>', unsafe_allow_html=True)
+        submit_onboarding = st.form_submit_button("Start Tracking Observations", type="primary", use_container_width=True)
 
         if submit_onboarding:
             if not name_input.strip():
@@ -519,19 +934,33 @@ if not st.session_state.onboarded:
 # -----------------------------------------------------------------------------
 # Main Application View (After Onboarding)
 # -----------------------------------------------------------------------------
-st.markdown('<div class="main-header">🩺 Health Observation Tracker</div>', unsafe_allow_html=True)
 st.markdown(
-    f'<div class="sub-header">Active Session for <strong>{st.session_state.name}</strong> • WhatsApp: <code>{st.session_state.whatsapp_number}</code></div>',
+    f"""
+    <div class="main-header-wrapper">
+        <div>
+            <h1 class="main-title">🩺 Health Observation Tracker</h1>
+            <p class="main-subtitle">Active Session for <strong style="color: #123B63;">{st.session_state.name}</strong> • WhatsApp: <code style="color: #0F766E; background: #EFF6FF; padding: 2px 7px; border-radius: 4px; font-weight: 600;">{st.session_state.whatsapp_number}</code></p>
+        </div>
+        <div class="header-accent">
+            <span class="header-accent-dot"></span> Clinical Documentation Aid
+        </div>
+    </div>
+    """,
     unsafe_allow_html=True,
 )
 
 # Safety notice banner
 st.markdown(
     """
-    <div class="disclaimer-box">
-        <strong>🛡️ Safe Health Tracking Notice:</strong> All AI descriptions describe visible characteristics only. 
-        The assistant does not make diagnoses or recommend treatments. If you experience severe symptoms or discomfort, 
-        please consult a qualified healthcare professional promptly.
+    <div class="safety-card">
+        <div class="safety-icon">🛡️</div>
+        <div>
+            <div class="safety-title">Safe Health Tracking Notice</div>
+            <p class="safety-message">
+                All AI descriptions describe visible characteristics only. The assistant <span class="safety-highlight">does not make diagnoses</span> 
+                or recommend treatments. If you experience severe symptoms or discomfort, please consult a qualified healthcare professional promptly.
+            </p>
+        </div>
     </div>
     """,
     unsafe_allow_html=True,
@@ -558,8 +987,15 @@ if api_key and GENAI_AVAILABLE and st.session_state.chat is None:
 # -----------------------------------------------------------------------------
 # Section 1: Observation Assistant (Upload & Record)
 # -----------------------------------------------------------------------------
-st.markdown("### 📸 Observation Assistant")
-st.write("Record a new visible health observation. You may provide a photo, written notes, or both.")
+st.markdown(
+    """
+    <div class="section-header">
+        <h2 class="section-title">📸 Observation Assistant</h2>
+        <p class="section-subtitle">Record a new visible health observation. You may provide a photo, written notes, or both.</p>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 with st.container():
     upload_col, note_col = st.columns([1, 1])
@@ -687,12 +1123,15 @@ with st.container():
 # -----------------------------------------------------------------------------
 # Section 2: Conversational Follow-ups
 # -----------------------------------------------------------------------------
-st.markdown("---")
-st.markdown("### 💬 Conversation & Follow-up Assistant")
-st.caption(
-    "Ask questions about your observations, such as: "
-    "*'What did you notice in my previous photo?'*, *'What did I mention last time?'*, "
-    "or *'What differences did I describe between these observations?'*"
+st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
+st.markdown(
+    """
+    <div class="section-header">
+        <h2 class="section-title">💬 Conversation & Follow-up Assistant</h2>
+        <p class="section-subtitle">Ask questions about your observations, review visible changes over time, or clarify notes.</p>
+    </div>
+    """,
+    unsafe_allow_html=True,
 )
 
 # Display Chat History
@@ -746,9 +1185,16 @@ if followup_input:
 # -----------------------------------------------------------------------------
 # Section 3: Observation Timeline
 # -----------------------------------------------------------------------------
-st.markdown("---")
-st.markdown("### 📈 Chronological Observation Timeline")
-st.write("Chronological log of all visible observations recorded during this session.")
+st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
+st.markdown(
+    """
+    <div class="section-header">
+        <h2 class="section-title">📈 Chronological Observation Timeline</h2>
+        <p class="section-subtitle">Chronological record of all visible health observations documented during this session.</p>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 if not st.session_state.observations:
     st.info("No observations recorded yet. Use the **Observation Assistant** above to add your first photo or note.")
@@ -780,9 +1226,16 @@ else:
 # -----------------------------------------------------------------------------
 # Section 4: Observation Summary & WhatsApp Sharing
 # -----------------------------------------------------------------------------
-st.markdown("---")
-st.markdown("### 📋 Observation Summary & WhatsApp Export")
-st.write("Generate a structured summary of all observations from this session to share with your healthcare provider.")
+st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
+st.markdown(
+    """
+    <div class="section-header">
+        <h2 class="section-title">📋 Observation Summary & WhatsApp Export</h2>
+        <p class="section-subtitle">Generate a structured clinical summary of all observations from this session to share with your healthcare provider.</p>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 col_sum_btn, col_sum_status = st.columns([1, 2])
 
